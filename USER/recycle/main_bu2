@@ -1,0 +1,370 @@
+/*******************************************************
+This program was created by tuannq
+
+Project : Test on MCBSTM32 kit
+Version : 1
+Date    : 15/06/2018
+Author  : tuannq
+Company : None
+Comments: 
+
+
+Chip type               : STM32F103RBT6
+Program type            : Examples
+External Clock frequency: 8.000000 MHz
+*******************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "GPIO_STM32F10x.h"
+#include "main.h"
+#include "delay.h"
+#include "lcd16x2_tuan.h"
+#include "rtc.h"
+#include "uart.h"
+//#include "eeprom_stm.h"
+
+#define LED(state) GPIO_PinWrite(GPIOA, 11, state);
+
+// Check mcu clock
+RCC_ClocksTypeDef mcu_clk;
+
+
+
+
+/******************RTC***********************************************/
+
+__IO uint32_t TimeDisplay = 0;
+uint8_t USART_Scanf(uint32_t value);
+
+/******************RTC***********************************************/
+
+
+
+
+
+
+
+///* Private typedef -----------------------------------------------------------*/
+///* Private define ------------------------------------------------------------*/
+///* Private macro -------------------------------------------------------------*/
+///* Private variables ---------------------------------------------------------*/
+//ErrorStatus  HSEStartUpStatus;
+//FLASH_Status FlashStatus;
+////uint16_t VarValue = 0;
+///* Virtual address defined by the user: 0xFFFF value is prohibited */
+//uint16_t VirtAddVarTab[NumbOfVar] = {0x5555, 0x6666, 0x7777};
+//uint16_t eeprom_temp;
+
+
+
+unsigned char HEXInStringToDec(unsigned char data)
+      {
+            if((data>47)&&(data<58)) return (data-48);// 0...9
+            else if((data>63)&&(data<71)) return (data-55);//A..F
+						else return 0;
+      }
+
+
+
+// USART Receiver buffer
+const uint8_t RX_BUFFER_SIZE0=20;
+uint16_t USART1_Time_Out; 
+uint8_t USART1_index=0,USART1_rx_data_buff[RX_BUFFER_SIZE0];
+uint8_t USART1_Time_Out_Over, USART1_Time_Out_Running,USART1_process;
+
+
+void TIM2_IRQHandler(void)
+{
+		if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+		{
+			TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+			//Timeout for ???
+			testwd++;
+
+			//for USART1 rec time out
+			if(USART1_Time_Out_Running==1)
+			{
+				USART1_Time_Out--;
+				if(USART1_Time_Out==0) USART1_Time_Out_Over=1;
+			}
+		}
+}
+
+
+
+
+
+void WWDG_Init(void);
+int main(void)
+{
+
+	SystemInit();
+	SystemCoreClockUpdate();
+	
+	//GPIO config
+	GPIO_PortClock   (GPIOC , true);
+	//TX1 RD485
+	GPIO_PortClock   (GPIOB, true);
+	GPIO_PinConfigure(GPIOB, 8, GPIO_OUT_PUSH_PULL, GPIO_MODE_OUT10MHZ);
+	GPIO_PinWrite(GPIOB, 8, 1);
+	//GPIO_PortWrite(GPIOB, 8,0);
+	//RL1
+	GPIO_PortClock   (GPIOB, true);
+	GPIO_PinConfigure(GPIOB, 9, GPIO_OUT_PUSH_PULL, GPIO_MODE_OUT10MHZ);
+	GPIO_PinWrite(GPIOB, 9, 0);
+	//RL8
+	//GPIO_PortClock   (GPIOA, true);
+	GPIO_PinConfigure(GPIOA, 5, GPIO_OUT_PUSH_PULL, GPIO_MODE_OUT10MHZ);
+	GPIO_PinWrite(GPIOA, 5, 0);
+	
+  /* Check if the system has resumed from WWDG reset */
+  if (RCC_GetFlagStatus(RCC_FLAG_WWDGRST) != RESET)
+  { 
+    /* WWDGRST flag set */
+    /* Turn on LED1 */
+    GPIO_PinWrite(GPIOB, 9, 1);
+    /* Clear reset flags */
+    RCC_ClearFlag();
+  }
+  else
+  {
+    /* WWDGRST flag is not set */
+    /* Turn off LED1 */
+    GPIO_PinWrite(GPIOB, 9, 0);
+  }
+	
+	
+	
+	
+	
+	
+	USART1_Init();
+	delay_ms(1);
+	printf("Kiem tra uart 1\r\n");
+	//check clock CPU
+	RCC_GetClocksFreq(&mcu_clk);
+	printf(">Thach anh: \r\nADCCLK:%d\r\nHCLK:%d\r\nPCLK1:%d\r\nPCLK2:%d\r\nSYSCLK:%d",mcu_clk.ADCCLK_Frequency,mcu_clk.HCLK_Frequency,mcu_clk.PCLK1_Frequency,mcu_clk.PCLK2_Frequency,mcu_clk.SYSCLK_Frequency);
+	
+	LCD_Init();
+	LCD_Clear();
+	LCD_Puts("Sometime it last");
+	LCD_Gotoxy(1,0);
+	LCD_Puts(" in love!");
+	
+	/***********************RTC*********************************/
+  RTC_Init();
+	
+	/* WWDG configuration */
+  WWDG_Init();
+	
+	
+	while(1)
+	{
+		/* Update WWDG counter */
+			WWDG_SetCounter(127);
+		/* If 1s has been elapsed */
+    if (TimeDisplay == 1)
+    {
+      /* Display current time */
+      Time_Display(RTC_GetCounter());
+      TimeDisplay = 0;
+			//delay_ms(10);
+    }
+	}
+
+	/*Load_data_from_EEPROM*/
+/** 
+  * @Author Tuan - 22/10/2014 
+  * @brief  Load_data_from_EEPROM
+  * @param  None
+  * @retval None
+  */
+	  /* Unlock the Flash Program Erase controller */
+  //FLASH_Unlock();
+
+  /* EEPROM Init */
+  //EE_Init();
+
+/* --- Store successively many values of the three variables in the EEPROM ---*/
+
+  //EE_WriteVariable(0,123 );
+  
+
+	//EE_ReadVariable(0,&eeprom_temp);
+	//printf("eeprom:%d",eeprom_temp);
+	
+	/* initialise EEPROM mgt */
+  //EEP_Init();
+
+	
+	while(1)
+		{
+			
+			
+			
+			
+			
+			//Allow process USART data buffer			
+			if(USART1_Time_Out_Over==1) 
+				{
+					USART1_Time_Out_Running=0;
+					USART1_Time_Out_Over=0;
+					USART1_process=1;
+				}
+
+		//Enable this if you want to check WWDG 
+		/*
+		if(testwd>0x2F00)
+		{
+			testwd=0;
+			printf("Ahihi do cho\r\n");
+			while(1);
+		}
+		*/
+		
+		//Process the message from MCU_ENCODE
+		
+			if(USART1_process==1)
+					{
+						
+						
+						
+						USART1_process=0;
+						for(USART1_index=0;USART1_index<RX_BUFFER_SIZE0;USART1_index++)
+                            {
+                            USART1_rx_data_buff[USART1_index]=0;
+                            }  
+                            USART1_index=0;
+					}
+
+		
+		}
+		
+}
+
+
+	
+
+//CRC8 caculator swat 25.03.2017
+uint8_t crc8(uint8_t *datainput,uint8_t datalength)
+{
+  uint16_t value,iscan;
+  value = datainput[0];
+  for(iscan=1;iscan<datalength;iscan++)
+    {
+      value += datainput[iscan];
+      if(value > 0xFF) value -= 256;
+      }
+      return value;
+  }
+						
+		
+
+
+
+
+
+
+
+
+
+
+
+/**
+  * @brief  Gets numeric values from the hyperterminal.
+  * @param  None
+  * @retval None
+  */
+uint8_t USART_Scanf(uint32_t value)
+{
+  uint32_t index = 0;
+  uint32_t tmp[2] = {0, 0};
+
+  while (index < 2)
+  {
+
+  }
+  /* Calculate the Corresponding value */
+  index = (tmp[1] - 0x30) + ((tmp[0] - 0x30) * 10);
+  /* Checks */
+  if (index > value)
+  {
+    printf("\n\rPlease enter valid number between 0 and %d", value);
+    return 0xFF;
+  }
+  return index;
+}
+
+
+  void WWDG_Init(void)
+  {
+	  /* On Value line devices, WWDG clock counter = (PCLK1 (24MHz)/4096)/8 = 732 Hz (~1366 us)  */
+	/* On other devices, WWDG clock counter = (PCLK1(36MHz)/4096)/8 = 1099 Hz (~910 us)  */
+	  WWDG_SetPrescaler(WWDG_Prescaler_8);
+
+	  /* Set Window value to 80; WWDG counter should be refreshed only when the counter
+		is below 80 (and greater than 64) otherwise a reset will be generated */
+	  WWDG_SetWindowValue(80);
+
+	  /* - On Value line devices,
+		Enable WWDG and set counter value to 127, WWDG timeout = ~1366 us * 64 = 87.42 ms 
+		In this case the refresh window is: ~1366us * (127-80) = 64.20 ms < refresh window < ~1366us * 64 = 87.42ms
+		 - On other devices
+		Enable WWDG and set counter value to 127, WWDG timeout = ~910 us * 64 = 58.25 ms 
+		In this case the refresh window is: ~910 us * (127-80) = 42.77 ms < refresh window < ~910 us * 64 = 58.25ms     
+	  */
+		/* Enable WWDG clock */
+	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
+	  WWDG_Enable(127);
+  }
+	
+#ifdef __GNUC__
+  /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+     set to 'Yes') calls __io_putchar() */
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif
+
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+ PUTCHAR_PROTOTYPE
+{
+	/* Place your implementation of fputc here */
+	/* e.g. write a character to the USART */
+	/* Loop until the end of transmission */
+	while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+	USART_SendData(USART1, (uint8_t) ch);
+
+	
+
+	return ch;
+}
+
+#ifdef  USE_FULL_ASSERT
+
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t* file, uint32_t line)
+{
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+  /* Infinite loop */
+  while (1)
+  {}
+}
+
+#endif	
+
+
+

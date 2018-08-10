@@ -1,0 +1,8 @@
+11 03 00 01 00 03 56 9B
+11 03 00 00 00 03 07 5B
+11 03 00 00 00 04 46 99
+11 03 00 00 00 08 46 9C >> read all holding
+11 04 00 00 00 01 33 5A
+11 04 00 00 00 08 F3 5C >>> read all input
+11 01 00 00 00 08 3F 5C >>> Read Coil Status (FC=01)
+11 02 00 00 00 08 7B 5C >>> Read Input Status (FC=02)
