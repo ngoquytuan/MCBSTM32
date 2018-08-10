@@ -26,7 +26,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "tim.h"
+#include "MCBSTM32.h"
+#ifdef USE_INTERNAL_RTC
 extern __IO uint32_t TimeDisplay;
+#endif
+
 extern __IO uint32_t TimingDelay;
 extern __IO uint32_t task1s;
 extern __IO uint32_t task100ms; 

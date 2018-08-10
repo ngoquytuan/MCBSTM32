@@ -120,7 +120,7 @@ void tim_GPIO_Configuration(void)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
 
-  /* GPIOB Configuration:Pin9, 10, 11 and 12 as alternate function push-pull */
+  /* GPIOB Configuration:Pin 9, 10, 11 and 12 as alternate function push-pull */
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_11 | GPIO_Pin_10 | GPIO_Pin_9;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;

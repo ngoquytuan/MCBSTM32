@@ -465,15 +465,14 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\objects\startup_stm32f10x_md.d -o.\objects\startup_stm32f10x_md.
-o -I"C:\Users\ngoqu\Google Drive\In working\STM32 Code\CODE_ON_OPENCMX\MDK\RTE"
- -I"C:\Users\ngoqu\Google Drive\In working\STM32 Code\CODE_ON_OPENCMX\MDK\RTE\D
-evice\STM32F103RB" -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include -I
-C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include -IC:\Keil_v5\ARM\PA
-CK\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc -IC:\Keil_v5\ARM\PACK\K
-eil\STM32F1xx_DFP\2.1.0\RTE_Driver --predefine="__MICROLIB SETA 1" --predefine=
-"__UVISION_VERSION SETA 520" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_
-MD SETA 1" --list=.\listings\startup_stm32f10x_md.lst RTE\Device\STM32F103RB\st
-artup_stm32f10x_md.s
+o -IC:\Users\ngoqu\Documents\GitHub\MCBSTM32\MDK\RTE -IC:\Users\ngoqu\Documents
+\GitHub\MCBSTM32\MDK\RTE\Device\STM32F103RB -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.0
+.0-Beta4\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\In
+clude -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\in
+c -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\RTE_Driver --predefine="__MICR
+OLIB SETA 1" --predefine="__UVISION_VERSION SETA 520" --predefine="_RTE_ SETA 1
+" --predefine="STM32F10X_MD SETA 1" --list=.\listings\startup_stm32f10x_md.lst 
+RTE\Device\STM32F103RB\startup_stm32f10x_md.s
 
 
 

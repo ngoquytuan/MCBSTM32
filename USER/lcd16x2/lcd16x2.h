@@ -2,15 +2,15 @@
 #ifndef __LCD_16X2_H
 #define __LCD_16X2_H
 
-//LCD marco
+//LCD pin mapping for MCBSTM32
 #define   LCD_RS(state)       GPIO_PinWrite(GPIOC, 12, state)
 #define   LCD_RW(state)       GPIO_PinWrite(GPIOC, 11, state)
 #define   LCD_EN(state)       GPIO_PinWrite(GPIOC, 10, state)
 
-#define   LCD_D4(state)       GPIO_PinWrite(GPIOC, 0, state)
-#define   LCD_D5(state)       GPIO_PinWrite(GPIOC, 1, state)
-#define   LCD_D6(state)       GPIO_PinWrite(GPIOC, 2, state)
-#define   LCD_D7(state)       GPIO_PinWrite(GPIOC, 3, state)
+#define   LCD_D4(state)       GPIO_PinWrite(GPIOC, 3, state)
+#define   LCD_D5(state)       GPIO_PinWrite(GPIOC, 2, state)
+#define   LCD_D6(state)       GPIO_PinWrite(GPIOC, 1, state)
+#define   LCD_D7(state)       GPIO_PinWrite(GPIOC, 0, state)
 #define		LCD_on							GPIO_PinWrite(GPIOC, 8, 1);
 #define		LCD_off							GPIO_PinWrite(GPIOC, 8, 0);
 

@@ -22,7 +22,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>OPENCMX</TargetName>
+    <TargetName>MCBSTM32</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -77,55 +77,60 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>18</CpuCode>
+      <CpuCode>0</CpuCode>
       <Books>
         <Book>
           <Number>0</Number>
+          <Title>CMSIS RTOS Tutorial (CMSIS_RTOS_Tutorial)</Title>
+          <Path>C:\Keil_v5\ARM\PACK\Hitex\CMSIS_RTOS_Tutorial\1.1.0\Documentation\CMSIS_RTOS_Tutorial.pdf</Path>
+        </Book>
+        <Book>
+          <Number>1</Number>
           <Title>Quick Start Guide (MCBSTM32E)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\STM32E_QSG.pdf</Path>
         </Book>
         <Book>
-          <Number>1</Number>
+          <Number>2</Number>
           <Title>Base Board Schematics (MCBSTM32E)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-base-board-schematics.pdf</Path>
         </Book>
         <Book>
-          <Number>2</Number>
+          <Number>3</Number>
           <Title>Display Board Schematics (MCBSTM32E)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-display-board-schematics.pdf</Path>
         </Book>
         <Book>
-          <Number>3</Number>
+          <Number>4</Number>
           <Title>User Manual (MCBSTM32E)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e.chm</Path>
         </Book>
         <Book>
-          <Number>4</Number>
+          <Number>5</Number>
           <Title>User Manual (NUCLEO-F103RB)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105823.pdf</Path>
         </Book>
         <Book>
-          <Number>5</Number>
+          <Number>6</Number>
           <Title>Overview (NUCLEO-F103RB)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105918.pdf</Path>
         </Book>
         <Book>
-          <Number>6</Number>
+          <Number>7</Number>
           <Title>Getting started (NUCLEO-F103RB)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105928.pdf</Path>
         </Book>
         <Book>
-          <Number>7</Number>
+          <Number>8</Number>
           <Title>Schematics (NUCLEO-F103RB)</Title>
           <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\MB1136.pdf</Path>
         </Book>
         <Book>
-          <Number>8</Number>
+          <Number>9</Number>
           <Title>MCBSTM32E Evaluation Board Web Page (MCBSTM32E)</Title>
           <Path>http://www.keil.com/mcbstm32e/</Path>
         </Book>
         <Book>
-          <Number>9</Number>
+          <Number>10</Number>
           <Title>STM32 Nucleo board (NUCLEO-F103RB)</Title>
           <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875</Path>
         </Book>
@@ -189,39 +194,64 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U17935099 -O14 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight JTAG-DP") -D00(3BA00477) -L00(4) -N01("Unknown JTAG device") -D01(06414041) -L01(5) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO31 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_512.FLM -FS08000000 -FL080000 -FP0($$Device:STM32F103RD$Flash\STM32F10x_512.FLM)</Name>
+          <Name>-U17935099 -O14 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight JTAG-DP") -D00(3BA00477) -L00(4) -N01("ST TMC") -D01(16410041) -L01(5) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO31 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_128.FLM -FS08000000 -FL020000 -FP0($$Device:STM32F103RB$Flash\STM32F10x_128.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 ) -FN1 -FC1000 -FD20000000 -FF0STM32F10x_512 -FL080000 -FS08000000 -FP0($$Device:STM32F103RD$Flash\STM32F10x_512.FLM)</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_128 -FS08000000 -FL020000 -FP0($$Device:STM32F103RB$Flash\STM32F10x_128.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>176</LineNumber>
+          <LineNumber>264</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134226552</Address>
+          <Address>134225080</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\USER\OPENCMX_fuc.c</Filename>
+          <Filename>C:\Users\ngoqu\Documents\GitHub\MCBSTM32\USER\OPENCMX_fuc.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\opencmx\../USER/OPENCMX_fuc.c\176</Expression>
+          <Expression>\\mcbstm32\../USER/OPENCMX_fuc.c\264</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>242</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134225048</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>C:\Users\ngoqu\Documents\GitHub\MCBSTM32\USER\OPENCMX_fuc.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\mcbstm32\../USER/OPENCMX_fuc.c\242</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>272</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134225096</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>C:\Users\ngoqu\Documents\GitHub\MCBSTM32\USER\OPENCMX_fuc.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\mcbstm32\../USER/OPENCMX_fuc.c\272</Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>adc2</ItemText>
-        </Ww>
-      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -279,8 +309,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\USER\OPENCMX_fuc.c</PathWithFileName>
-      <FilenameWithoutPath>OPENCMX_fuc.c</FilenameWithoutPath>
+      <PathWithFileName>..\USER\MCBSTM32_main.c</PathWithFileName>
+      <FilenameWithoutPath>MCBSTM32_main.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -291,8 +321,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\USER\OPENCMX_main.c</PathWithFileName>
-      <FilenameWithoutPath>OPENCMX_main.c</FilenameWithoutPath>
+      <PathWithFileName>..\USER\MCBSTM32_fuc.c</PathWithFileName>
+      <FilenameWithoutPath>MCBSTM32_fuc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -300,7 +330,7 @@
 
   <Group>
     <GroupName>delay</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -320,7 +350,7 @@
 
   <Group>
     <GroupName>lcd</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -340,7 +370,7 @@
 
   <Group>
     <GroupName>uart</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -360,7 +390,7 @@
 
   <Group>
     <GroupName>interupt</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -440,7 +470,7 @@
 
   <Group>
     <GroupName>adcdma</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -504,7 +534,7 @@
 
   <Group>
     <GroupName>tim</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

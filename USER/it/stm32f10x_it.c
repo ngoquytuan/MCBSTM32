@@ -38,8 +38,10 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-
+#ifdef USE_INTERNAL_RTC
 __IO uint32_t TimeDisplay = 0;
+#endif
+
 __IO uint32_t TimingDelay = 0;
 __IO uint32_t task1s = 1000;
 __IO uint32_t task100ms = 100;
@@ -207,6 +209,7 @@ void USART2_IRQHandler(void)
   * @param  None
   * @retval None
   */
+#ifdef USE_INTERNAL_RTC
 uint8_t ledbit = 1;
 void RTC_IRQHandler(void)
 {
@@ -226,6 +229,7 @@ void RTC_IRQHandler(void)
     
   }
 }
+#endif
 /**
   * @brief  This function handles TIM2 global interrupt request.
   * @param  None
@@ -233,7 +237,10 @@ void RTC_IRQHandler(void)
   */
 void TIM2_IRQHandler(void)
 {
-  tim_irq_fuc();
+  
+	#ifdef TEST_TIM
+		tim_irq_fuc();
+	#endif
 }
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */

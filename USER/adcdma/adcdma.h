@@ -10,6 +10,6 @@
 /* Exported functions ------------------------------------------------------- */
 extern __IO uint16_t ADCConvertedValue;
 void adcPA1_DMA_init(void);
-
+#define ADC1_DR_Address    ((uint32_t)0x4001244C)
 #endif /* __ADCDMA_H */
 

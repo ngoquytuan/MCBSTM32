@@ -5,7 +5,7 @@ __IO uint16_t ADCConvertedValue;
   
   void adcPA1_DMA_init(void)
   {
-//#define ADC1_DR_Address    ((uint32_t)0x4001244C)
+		
     ADC_InitTypeDef ADC_InitStructure;
     DMA_InitTypeDef DMA_InitStructure;		
 		GPIO_InitTypeDef GPIO_InitStructure;
@@ -14,7 +14,7 @@ __IO uint16_t ADCConvertedValue;
     RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
         /* Enable clock ADC1 */
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1 , ENABLE);
-			/* Configure PA.01 (ADC Channel 1) as analog input -------------------------*/
+			/* Configure PA1 (ADC Channel 1) as analog input -------------------------*/
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 		GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -22,7 +22,7 @@ __IO uint16_t ADCConvertedValue;
 		/* DMA1 channel1 configuration ----------------------------------------------*/
 		DMA_DeInit(DMA1_Channel1);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)(&(ADC1->DR));//ADC1_DR_Address;
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&ADCConvertedValue;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&ADCConvertedValue;//when done adc, adc value will automatic store here!
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
 		DMA_InitStructure.DMA_BufferSize = 1;
 		DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;

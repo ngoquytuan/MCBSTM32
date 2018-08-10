@@ -3,8 +3,8 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'OPENCMX' 
- * Target:  'OPENCMX' 
+ * Project: 'MCBSTM32' 
+ * Target:  'MCBSTM32' 
  */
 
 #ifndef RTE_COMPONENTS_H

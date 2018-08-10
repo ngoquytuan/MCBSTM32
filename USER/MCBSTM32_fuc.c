@@ -81,9 +81,9 @@ void test_eeprom(void)
 	EE_WriteVariable(4,'0');
 	EE_WriteVariable(5,'m');
 	EE_WriteVariable(6,178);
-	printf("EEPROM new\r\n");
+	printf("EEPROM Error, save agian!\r\n");
 	}
-	printf("EEPROM:%c%c%c%c%c%c-----------",a,b,c,d,e,f);
+	else printf("EEPROM OK:%c%c%c%c%c%c",a,b,c,d,e,f);
 
 }	
 /**
@@ -97,7 +97,8 @@ void sw_eeprom_stm32(void)
   FLASH_Unlock();
 
   /* EEPROM Init */
-  EE_Init();
+  if(EE_Init() == FLASH_COMPLETE) printf("EEPROM STM32 ready !\r\n");
+	
 }				
 /**
   * @brief  GPIO_config
@@ -135,7 +136,7 @@ void E24C32Test (void)
 //		EEPROM_WriteReg(i,4);
 //		delay_ms(3);
 //	}
-	//EEPROM_W_Regs(1,14,"the package come");
+	EEPROM_W_Regs(0,14,".STM32........");
 	for(i=0;i<15;i++)
 	{
 		printf("MEM %d: %c\r\n",i,EEPROM_ReadReg(i));
@@ -166,57 +167,69 @@ void tasks(void)
 {
 int16_t adc0, adc1, adc2, adc3;  	
 
-	/* If 1s has been elapsed */
-    if (TimeDisplay == 1)
-    {
-      /* Display current time */
-			//printf("ADC!\r\n");
-			//adc0 = readADC_SingleEnded(0);
-			//adc1 = readADC_SingleEnded(1);
-			//adc2 = readADC_SingleEnded(2);
-			//adc3 = readADC_SingleEnded(3);
-			//printf("ADS:%d,%d,%d,%d\r\n",(adc0),adc1,adc2,adc3);
-      Time_Display(RTC_GetCounter());
-      TimeDisplay = 0;
-    }
-		
+			#ifdef USE_INTERNAL_RTC
+				/* If 1s has been elapsed */
+				if (TimeDisplay == 1)
+				{
+					TimeDisplay = 0;
+					
+					//printf("ADC!\r\n");
+					//adc0 = readADC_SingleEnded(0);
+					//adc1 = readADC_SingleEnded(1);
+					//adc2 = readADC_SingleEnded(2);
+					//adc3 = readADC_SingleEnded(3);
+					//printf("ADS:%d,%d,%d,%d\r\n",(adc0),adc1,adc2,adc3);
+					#ifdef TEST_INTERNAL_RTC
+					/* Display current time */
+					Time_Display(RTC_GetCounter());
+					#endif
+				}
+			#endif
 		if(task100ms == ONTIME)
 		{
 			task100ms = 100;
 			//printf("Kiem tra 100ms\r\n");
+			#ifdef TEST_ADC
+				u = ADCConvertedValue;
+				u_kalman = updateEstimate(u);
+				printf("%2.1f,%2.1f\r\n",u,u_kalman);
+			#endif
+			
+		}
+		#ifdef USE_UART1
+			//UART1 RX process
+			if(u1out == ONTIME)
+			{
+				u1out = STOP;// Da nhan du ban tin UART => Xy ly
+				printf("UART1:%s\r\n",USART1_rx_data_buff);
+				for(USART1_index=0;USART1_index<RX_BUFFER_SIZE0;USART1_index++)
+															{
+															USART1_rx_data_buff[USART1_index]=0;
+															}  
+															USART1_index=0;
+			}
+		#endif
 
-			u = ADCConvertedValue;
-			u_kalman = updateEstimate(u);
-			//printf("%2.1f,%2.1f\r\n",u,u_kalman);
-		}
-		//UART1 RX process
-		if(u1out == ONTIME)
-		{
-			u1out = STOP;// Da nhan du ban tin UART => Xy ly
-			printf("UART1:%s\r\n",USART1_rx_data_buff);
-			for(USART1_index=0;USART1_index<RX_BUFFER_SIZE0;USART1_index++)
-                            {
-                            USART1_rx_data_buff[USART1_index]=0;
-                            }  
-                            USART1_index=0;
-		}
-		//UART2 RX process
-		if(u2out == ONTIME)
-		{
-			u2out = STOP;// Da nhan du ban tin UART => Xy ly
-			printf("UART2:%s\r\n",rx2_data_buff);
-			
-			//for modbus slave
-			//modbus_slave_exe(rx2_data_buff, USART2_index);
-			//for modbus master
-			//modbus_master_exe(rx2_data_buff, USART2_index);
-			
-			for(USART2_index=0;USART2_index<RX2_BUFFER_SIZE;USART2_index++)
-                            {
-                             rx2_data_buff[USART2_index]=0;
-                            }  
-                            USART2_index=0;
-		}
+		#ifdef USE_UART2
+			//UART2 RX process
+			if(u2out == ONTIME)
+			{
+				u2out = STOP;// Da nhan du ban tin UART => Xy ly
+				printf("UART2:%s\r\n",rx2_data_buff);
+				
+				//for modbus slave
+				//modbus_slave_exe(rx2_data_buff, USART2_index);
+				//for modbus master
+				//modbus_master_exe(rx2_data_buff, USART2_index);
+				
+				for(USART2_index=0;USART2_index<RX2_BUFFER_SIZE;USART2_index++)
+															{
+															 rx2_data_buff[USART2_index]=0;
+															}  
+															USART2_index=0;
+			}
+		#endif
+
 }
 /**
   * @brief  hardware_init
@@ -256,43 +269,80 @@ void hardware_init(void)
     /* Turn off LED1 */
     GPIO_PinWrite(GPIOB, 9, 0);
   }
-	//ADC on PA1 using DMA init
-	//adcPA1_DMA_init();
-	//EEPROM STM32 init
-	//sw_eeprom_stm32();
+	
+
 	
 	USART1_Init();
 	//USART2_Init();
 	delay_ms(1);
-	printf("Kiem tra uart\r\n");
 	
 	
-	//test_eeprom();
+	#ifdef TEST_UART
 	//check clock CPU
 	RCC_GetClocksFreq(&mcu_clk);
-	printf(">Thach anh: \r\nADCCLK:%d\r\nHCLK:%d\r\nPCLK1:%d\r\nPCLK2:%d\r\nSYSCLK:%d",mcu_clk.ADCCLK_Frequency,mcu_clk.HCLK_Frequency,mcu_clk.PCLK1_Frequency,mcu_clk.PCLK2_Frequency,mcu_clk.SYSCLK_Frequency);
+	printf("Kiem tra uart\r\n");
+	printf(">Thach anh: \r\nADCCLK:%d\r\nHCLK:%d\r\nPCLK1:%d\r\nPCLK2:%d\r\nSYSCLK:%d",
+																mcu_clk.ADCCLK_Frequency,mcu_clk.HCLK_Frequency,
+																mcu_clk.PCLK1_Frequency,mcu_clk.PCLK2_Frequency,mcu_clk.SYSCLK_Frequency);
+	#endif
+
 	
-	LCD_Init();
-	LCD_Clear();
-	LCD_Puts("Market is OPEN");
-	LCD_Gotoxy(1,0);
-	LCD_Puts(" in love?");
-	//lcdprintf("%d",mcu_clk.ADCCLK_Frequency);
-  RTC_Init();
+	#ifdef USE_EMU_EEPROM
+		//using stm32's flash to store data
+		//EEPROM STM32 init
+		sw_eeprom_stm32();
+		#ifdef TEST_EMU_EEPROM
+		test_eeprom();
+		#endif
+	#endif
+	
+	#ifdef USE_LCD16x2
+		LCD_Init();
+		LCD_Clear();
+		#ifdef TEST_LCD16x2
+			LCD_Puts("Market is OPEN");
+			LCD_Gotoxy(1,0);
+			LCD_Puts(" in love? NO!");
+		#endif
+	#endif
+	
+	#ifdef USE_INTERNAL_RTC
+	RTC_Init();
+	#endif
+  
+	#ifdef USE_ADC_DMA
+		//ADC on PA1 using DMA init
+		adcPA1_DMA_init();
+		#ifdef USE_KALMAN
+			SimpleKalmanFilter(2.0,2.0,0.001);
+		#endif
+	#endif
 	
 	/* WWDG configuration */
   //WWDG_Init();
 	
-	SimpleKalmanFilter(2.0,2.0,0.001);
-	//Run some timer examples
-	//tim_ex();
+	#ifdef TEST_TIM
+		//Run some timer examples
+		tim_ex();
+	#endif
+
 
 	/* Initialize the I2C EEPROM driver ----------------------------------------*/ 
-	
-	if(I2C_Config()==0) printf("I2C init failed!\r\n");;
-	//if(EEPROM_init()==0) printf("EEPROM init failed!\r\n");
-	if(ADS1115_init() ==1) printf("ADS1115 init done!\r\n");;
-	//E24C32Test();
+	#ifdef USE_I2C
+		if(I2C_Config()==0) printf("I2C init failed!\r\n");
+		
+		#ifdef USE_24C32
+		if(EEPROM_init()==0) printf("EEPROM init failed!\r\n");
+			#ifdef TEST_24C32
+				E24C32Test();
+			#endif
+		
+		#endif
+		
+		//if(ADS1115_init() ==1) printf("ADS1115 init done!\r\n");;
+		
+	#endif
+
 
 }
 			

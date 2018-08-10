@@ -1,6 +1,5 @@
 #include "rtc.h"
 #include <stdio.h>
-
 extern __IO uint32_t TimeDisplay;
 #define RTCClockOutput_Enable  /* RTC Clock/64 is output on tamper pin(PC.13) */
 void RTC_Init(void)
@@ -212,5 +211,4 @@ void Time_Show(void)
 
   }
 }
-
 

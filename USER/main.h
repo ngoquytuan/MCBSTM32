@@ -8,7 +8,7 @@
 #include "lcd16x2.h"
 #include "rtc.h"
 #include "uart.h"
-#include "OPENCMX.h"
+#include "MCBSTM32.h"
 #include "eeprom_stm.h"
 #include "SimpleKalmanFilter.h"
 #include "adcdma.h"
