@@ -272,8 +272,12 @@ void hardware_init(void)
 	
 
 	
-	USART1_Init();
-	//USART2_Init();
+	#ifdef USE_UART1
+		USART1_Init();
+	#endif
+	#ifdef USE_UART2
+		USART2_Init();
+	#endif
 	delay_ms(1);
 	
 	
