@@ -24,9 +24,9 @@ void hardware_init(void);
 #define TEST_LCD16x2
 #define USE_INTERNAL_RTC 
 //#define TEST_INTERNAL_RTC
-//#define USE_ADC_DMA 
-//#define USE_KALMAN
-//#define TEST_ADC
+#define USE_ADC_DMA 
+#define USE_KALMAN
+#define TEST_ADC
 #define TEST_TIM
 #define USE_I2C
 //#define USE_24C32
