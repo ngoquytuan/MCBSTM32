@@ -10,12 +10,13 @@
       <TargetName>MCBSTM32</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060183::V5.06 update 2 (build 183)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F103RB</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F1xx_DFP.2.1.0</PackID>
+          <PackID>Keil.STM32F1xx_DFP.2.3.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x5000) IROM(0x08000000,0x20000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -183,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -323,6 +325,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -330,6 +333,7 @@
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
@@ -347,6 +351,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -723,7 +728,7 @@
       <file attr="config" category="header" name="RTE_Driver\Config\RTE_Device.h" version="1.1.2">
         <instance index="0">RTE\Device\STM32F103RB\RTE_Device.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
         <targetInfos>
           <targetInfo name="MCBSTM32"/>
         </targetInfos>
@@ -731,7 +736,7 @@
       <file attr="config" category="source" condition="STM32F1xx MD ARMCC" name="Device\Source\ARM\startup_stm32f10x_md.s" version="1.0.0">
         <instance index="0">RTE\Device\STM32F103RB\startup_stm32f10x_md.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
         <targetInfos>
           <targetInfo name="MCBSTM32"/>
         </targetInfos>
@@ -739,7 +744,7 @@
       <file attr="config" category="source" name="Device\StdPeriph_Driver\templates\stm32f10x_conf.h" version="3.5.0">
         <instance index="0">RTE\Device\STM32F103RB\stm32f10x_conf.h</instance>
         <component Cclass="Device" Cgroup="StdPeriph Drivers" Csub="Framework" Cvendor="Keil" Cversion="3.5.1" condition="STM32F1xx STDPERIPH"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
         <targetInfos>
           <targetInfo name="MCBSTM32"/>
         </targetInfos>
@@ -747,7 +752,7 @@
       <file attr="config" category="source" name="Device\Source\system_stm32f10x.c" version="1.0.0">
         <instance index="0">RTE\Device\STM32F103RB\system_stm32f10x.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.0.0" condition="STM32F1xx CMSIS"/>
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
+        <package name="STM32F1xx_DFP" schemaVersion="1.4.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.3.0"/>
         <targetInfos>
           <targetInfo name="MCBSTM32"/>
         </targetInfos>
